@@ -13,8 +13,8 @@ export const eventBus = new Vue({
     createTask (task) {
       this.$emit('createTask', task)
     },
-    deleteTask (task) {
-      this.$emit('deleteTask', task)
+    deleteTask (taskId) {
+      this.$emit('deleteTask', taskId)
     }
   }
 })

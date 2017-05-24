@@ -26,12 +26,36 @@
     data () {
       return {
         todo: [
-          {id: 1, title: 'Learn English', description: 'Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.'},
-          {id: 2, title: 'Make dinner', description: 'Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.'},
-          {id: 3, title: 'Make dinner', description: 'Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.'},
-          {id: 4, title: 'Make dinner', description: 'Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.'},
-          {id: 5, title: 'Make dinner', description: 'Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.'},
-          {id: 6, title: 'Make dinner', description: 'Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.'}
+          {
+            id: 1,
+            title: 'Learn English',
+            description: 'Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.'
+          },
+          {
+            id: 2,
+            title: 'Make dinner',
+            description: 'Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.'
+          },
+          {
+            id: 3,
+            title: 'Make dinner',
+            description: 'Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.'
+          },
+          {
+            id: 4,
+            title: 'Make dinner',
+            description: 'Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.'
+          },
+          {
+            id: 5,
+            title: 'Make dinner',
+            description: 'Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.'
+          },
+          {
+            id: 6,
+            title: 'Make dinner',
+            description: 'Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.'
+          }
         ],
         doing: [],
         done: []
@@ -40,11 +64,29 @@
     components: {
       appTask: Task
     },
+    methods: {
+      removeTask (items, taskId) {
+        for (let i = 0; i < items.length; i++) {
+          if (items[i].id === taskId) {
+            items.splice(i, 1)
+            return true
+          }
+        }
+        return false
+      }
+    },
     created () {
       eventBus.$on('createTask', (task) => {
         this.doing.unshift(task)
-        this.doing.unshift(task)
-        console.log('done')
+      })
+      eventBus.$on('deleteTask', (taskId) => {
+        let isRemove = this.removeTask(this.todo, taskId)
+        if (!isRemove) {
+          isRemove = this.removeTask(this.doing, taskId)
+          if (!isRemove) {
+            this.removeTask(this.done, taskId)
+          }
+        }
       })
     }
   }

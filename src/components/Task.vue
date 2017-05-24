@@ -7,8 +7,8 @@
           <p>{{ task.description }}</p>
         </div>
         <div class="card-action">
-          <a href="#">View</a>
-          <a href="#">Delete</a>
+          <a>View</a>
+          <a @click="deleteTask">Delete</a>
         </div>
       </div>
     </div>
@@ -16,10 +16,21 @@
 </template>
 
 <script>
-export default {
-  name: 'Task',
-  props: ['task']
-}
+  import { eventBus } from '../main'
+
+  export default {
+    name: 'Task',
+    props: ['task'],
+    methods: {
+      deleteTask () {
+        eventBus.$emit('deleteTask', this.task.id)
+      }
+    }
+  }
 </script>
 
-<style></style>
+<style>
+  a {
+    cursor: pointer;
+  }
+</style>
