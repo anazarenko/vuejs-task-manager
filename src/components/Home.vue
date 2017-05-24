@@ -19,6 +19,7 @@
 
 <script>
   import Task from './Task.vue'
+  import { eventBus } from '../main'
 
   export default {
     name: 'Home',
@@ -38,6 +39,13 @@
     },
     components: {
       appTask: Task
+    },
+    created () {
+      eventBus.$on('createTask', (task) => {
+        this.doing.unshift(task)
+        this.doing.unshift(task)
+        console.log('done')
+      })
     }
   }
 </script>

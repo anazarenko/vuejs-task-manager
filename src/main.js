@@ -3,8 +3,21 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import VeeValidate from 'vee-validate'
 
 Vue.config.productionTip = false
+Vue.use(VeeValidate)
+
+export const eventBus = new Vue({
+  methods: {
+    createTask (task) {
+      this.$emit('createTask', task)
+    },
+    deleteTask (task) {
+      this.$emit('deleteTask', task)
+    }
+  }
+})
 
 /* eslint-disable no-new */
 new Vue({
