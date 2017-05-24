@@ -1,15 +1,26 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Hello from '@/components/Hello'
+import Default from '../components/Default.vue'
+import Create from '../components/Create.vue'
 
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
-      name: 'Hello',
-      component: Hello
+      name: 'home',
+      component: Default
+    },
+    {
+      path: '/create',
+      name: 'create',
+      component: Create
+    },
+    {
+      path: '*',
+      redirect: '/'
     }
   ]
 })

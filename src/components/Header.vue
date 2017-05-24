@@ -4,7 +4,7 @@
       <div class="nav-wrapper">
         <a href="#" class="brand-logo">TODO Manager</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
-          <li><a>Add</a></li>
+          <router-link to="/create" activeClass="active" tag="li"><a>Create New Task</a></router-link>
         </ul>
       </div>
     </nav>
