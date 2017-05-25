@@ -79,6 +79,7 @@ const mutations = {
         description: 'fd kjdfb ksfh fkjbds fkjdvb',
         city: 'Kiev',
         date: '20.06.2016',
+        created: '12213',
         weather: {
           icon: '02d',
           main: 'Rain',
@@ -91,6 +92,20 @@ const mutations = {
         description: 'fd kjdfb ksfh fkjbds fkjdvb',
         city: 'Lviv',
         date: '04.06.2016',
+        created: 'kjlkj',
+        weather: {
+          icon: '01d',
+          main: 'Sun',
+          description: 'small rain'
+        }
+      },
+      {
+        id: 150,
+        title: 'Make Video',
+        description: 'fd kjdfb ksfh fkjbds fkjdvb',
+        city: 'Lviv',
+        date: '04.06.2016',
+        created: 'jkjklh',
         weather: {
           icon: '01d',
           main: 'Sun',
@@ -122,6 +137,9 @@ const mutations = {
   'REMOVE_TASK' (state, taskId) {
     let isRemoved = false
     for (let i = 0; i < state.todo.length; i++) {
+      console.log(taskId)
+      console.log(state.todo[i].id)
+      console.log('----')
       if (state.todo[i].id === taskId) {
         state.todo.splice(i, 1)
         isRemoved = true
@@ -130,9 +148,9 @@ const mutations = {
     if (isRemoved) {
       // this.saveToStorage()
     } else {
-      for (let i = 0; i < state.todo.length; i++) {
-        if (state.todo[i].id === taskId) {
-          state.todo.splice(i, 1)
+      for (let i = 0; i < state.doing.length; i++) {
+        if (state.doing[i].id === taskId) {
+          state.doing.splice(i, 1)
           isRemoved = true
         }
       }
@@ -140,13 +158,20 @@ const mutations = {
     if (isRemoved) {
       // this.saveToStorage()
     } else {
-      for (let i = 0; i < state.todo.length; i++) {
-        if (state.todo[i].id === taskId) {
-          state.todo.splice(i, 1)
+      for (let i = 0; i < state.todo.done; i++) {
+        if (state.done[i].id === taskId) {
+          state.done.splice(i, 1)
           isRemoved = true
         }
       }
     }
+  },
+  'CHANGE_TASK_POSITION' (state, {from, to}) {
+    state.todo[from] = state.todo.splice(to, 1, state.todo[from])[0]
+    // let b = state.todo[from]
+    // state.todo[from] = state.todo[to]
+    // state.todo[to] = b
+    // state.todo.sort()
   }
 }
 
@@ -159,6 +184,9 @@ const actions = {
   },
   removeTask ({commit}, taskId) {
     commit('REMOVE_TASK', taskId)
+  },
+  changeTaskPosition ({commit}, payload) {
+    commit('CHANGE_TASK_POSITION', payload)
   }
 }
 

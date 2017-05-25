@@ -3,19 +3,19 @@
     <div class="row tasks">
       <div class="col s4">
         <h5>TODO</h5>
-        <draggable class="task-list" element="div" v-model="todo" @end="endMove" :options="dragOptions">
+        <draggable class="task-list todo" element="div" v-model="todo" @end="endMove" :options="dragOptions">
           <app-task v-for="task in todo" :task="task" :key="task.id"></app-task>
         </draggable>
       </div>
       <div class="col s4">
         <h5>DOING</h5>
-        <draggable class="task-list" element="div" v-model="doing" @end="endMove" :options="dragOptions">
+        <draggable class="task-list doing" element="div" v-model="doing" @end="endMove" :options="dragOptions">
           <app-task v-for="task in doing" :task="task" :key="task.id"></app-task>
         </draggable>
       </div>
       <div class="col s4">
         <h5>DONE</h5>
-        <draggable class="task-list" element="div" v-model="done" @end="endMove" :options="dragOptions">
+        <draggable class="task-list done" element="div" v-model="done" @end="endMove" :options="dragOptions">
           <app-task v-for="task in done" :task="task" :key="task.id"></app-task>
         </draggable>
       </div>
@@ -54,8 +54,10 @@
       },
       endMove (evt) {
 //        console.log(evt)
-//        console.log(evt.oldIndex)
-//        console.log(evt.newIndex)
+        console.log(evt.oldIndex)
+        console.log(evt.newIndex)
+        console.log('----')
+        this.$store.dispatch('changeTaskPosition', {from: evt.oldIndex, to: evt.newIndex})
 //        this.saveToStorage()
       }
     },
