@@ -53,7 +53,6 @@
   import vSelect from 'vue-select'
 
   const OPEN_WEATHER_KEY = 'fb8f9655c18e2c723a01bb1f23ad7026'
-//  const GOOGLE_LOCATION_KEY = 'AIzaSyCrj4GrnWigTHGX0HShP506vdyRLNNqNmQ'
 
   export default {
     name: 'Create',
@@ -139,23 +138,6 @@
           }, response => {
             loading(false)
           })
-//        this.$http.get('https://maps.googleapis.com/maps/api/place/autocomplete/json', {
-//          params: {
-//            input: search,
-//            types: '(cities)',
-//            language: 'en_GB',
-//            key: GOOGLE_LOCATION_KEY
-//          }
-//        })
-//          .then(respone => {
-//            console.log('google success')
-//            console.log(respone)
-//            loading(false)
-//          }, respone => {
-//            console.log('google failure')
-//            console.log(respone)
-//            loading(false)
-//          })
       },
       changeCity (val) {
         this.task.city = JSON.stringify(val)

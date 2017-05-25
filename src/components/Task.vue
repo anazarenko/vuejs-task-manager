@@ -8,7 +8,8 @@
           <p style="margin-top: 16px">{{ task.description }}</p>
         </div>
         <div class="card-action">
-          <a>View</a>
+          <router-link :to="viewLink">View</router-link>
+          <a>Edit</a>
           <a @click="deleteTask">Delete</a>
         </div>
       </div>
@@ -21,12 +22,18 @@
 
   export default {
     name: 'Task',
+    props: ['task'],
     data () {
       return {
-        iconSrc: `http://openweathermap.org/img/w/${this.task.weather.icon}.png`
+        iconSrc: `http://openweathermap.org/img/w/${this.task.weather.icon}.png`,
+        viewLink: {
+          name: 'taskView',
+          params: {
+            id: this.task.id
+          }
+        }
       }
     },
-    props: ['task'],
     methods: {
       deleteTask () {
         eventBus.$emit('deleteTask', this.task.id)
