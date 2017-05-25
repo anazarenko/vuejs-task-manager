@@ -158,7 +158,7 @@ const mutations = {
     if (isRemoved) {
       // this.saveToStorage()
     } else {
-      for (let i = 0; i < state.todo.done; i++) {
+      for (let i = 0; i < state.done.length; i++) {
         if (state.done[i].id === taskId) {
           state.done.splice(i, 1)
           isRemoved = true
@@ -166,12 +166,18 @@ const mutations = {
       }
     }
   },
-  'CHANGE_TASK_POSITION' (state, {from, to}) {
-    state.todo[from] = state.todo.splice(to, 1, state.todo[from])[0]
-    // let b = state.todo[from]
-    // state.todo[from] = state.todo[to]
-    // state.todo[to] = b
-    // state.todo.sort()
+  'UPDATE_LIST' (state, payload) {
+    switch (payload.listName) {
+      case 'todo':
+        state.todo = payload.list
+        break
+      case 'doing':
+        state.doing = payload.list
+        break
+      case 'done':
+        state.done = payload.list
+        break
+    }
   }
 }
 
@@ -185,8 +191,8 @@ const actions = {
   removeTask ({commit}, taskId) {
     commit('REMOVE_TASK', taskId)
   },
-  changeTaskPosition ({commit}, payload) {
-    commit('CHANGE_TASK_POSITION', payload)
+  updateList ({commit}, payload) {
+    commit('UPDATE_LIST', payload)
   }
 }
 

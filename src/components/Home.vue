@@ -53,12 +53,26 @@
         return false
       },
       endMove (evt) {
-//        console.log(evt)
-        console.log(evt.oldIndex)
-        console.log(evt.newIndex)
-        console.log('----')
-        this.$store.dispatch('changeTaskPosition', {from: evt.oldIndex, to: evt.newIndex})
+//        let fromList = this.searchListName(evt.from.className)
+//        let toList = this.searchListName(evt.to.className)
+//        this.$store.dispatch('changeTaskPosition', {
+//          from: evt.oldIndex,
+//          to: evt.newIndex,
+//          fromList: fromList,
+//          toList: toList
+//        })
 //        this.saveToStorage()
+      },
+      searchListName (classString) {
+        if (classString.search('todo') !== -1) {
+          return 'todo'
+        } else if (classString.search('doing') !== -1) {
+          return 'doing'
+        } else if (classString.search('done') !== -1) {
+          return 'done'
+        } else {
+          return null
+        }
       }
     },
     computed: {
@@ -67,14 +81,29 @@
           group: 'tasks'
         }
       },
-      todo () {
-        return this.$store.getters.todo
+      todo: {
+        get () {
+          return this.$store.getters.todo
+        },
+        set (list) {
+          this.$store.dispatch('updateList', {listName: 'todo', list: list})
+        }
       },
-      doing () {
-        return this.$store.getters.doing
+      doing: {
+        get () {
+          return this.$store.getters.doing
+        },
+        set (list) {
+          this.$store.dispatch('updateList', {listName: 'doing', list: list})
+        }
       },
-      done () {
-        return this.$store.getters.done
+      done: {
+        get () {
+          return this.$store.getters.done
+        },
+        set (list) {
+          this.$store.dispatch('updateList', {listName: 'done', list: list})
+        }
       }
     },
     created () {
