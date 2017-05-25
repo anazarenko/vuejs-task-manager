@@ -49,7 +49,7 @@
           eventBus.createTask(this.task)
           this.navigateToHome()
         }).catch(() => {
-          alert('Correct them errors!')
+//          alert('Correct them errors!')
         })
       },
       navigateToHome () {

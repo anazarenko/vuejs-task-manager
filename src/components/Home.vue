@@ -3,22 +3,19 @@
     <div class="row tasks">
       <div class="col s4">
         <h5>TODO</h5>
-        <!--<draggable v-model="myArray" :options="{group:'people'}" @start="drag=true" @end="drag=false">-->
-          <!--<div v-for="element in myArray">{{element.name}}</div>-->
-        <!--</draggable>-->
-        <draggable class="task-list" element="div" v-model="todo" :options="dragOptions">
+        <draggable class="task-list" element="div" v-model="todo" @end="endMove" :options="dragOptions">
           <app-task v-for="task in todo" :task="task" :key="task.id"></app-task>
         </draggable>
       </div>
       <div class="col s4">
         <h5>DOING</h5>
-        <draggable class="task-list" element="div" v-model="doing" :options="dragOptions">
+        <draggable class="task-list" element="div" v-model="doing" @end="endMove" :options="dragOptions">
           <app-task v-for="task in doing" :task="task" :key="task.id"></app-task>
         </draggable>
       </div>
       <div class="col s4">
         <h5>DONE</h5>
-        <draggable class="task-list" element="div" v-model="done" :options="dragOptions">
+        <draggable class="task-list" element="div" v-model="done" @end="endMove" :options="dragOptions">
           <app-task v-for="task in done" :task="task" :key="task.id"></app-task>
         </draggable>
       </div>
@@ -35,42 +32,9 @@
     name: 'Home',
     data () {
       return {
-        todo: [
-          {
-            id: 1,
-            title: 'Learn English',
-            description: 'Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.'
-          },
-          {
-            id: 2,
-            title: 'Make dinner',
-            description: 'Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.'
-          },
-          {
-            id: 3,
-            title: 'Make dinner',
-            description: 'Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.'
-          },
-          {
-            id: 4,
-            title: 'Make dinner',
-            description: 'Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.'
-          }
-        ],
-        doing: [
-          {
-            id: 6,
-            title: 'Play tennis',
-            description: 'Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.'
-          }
-        ],
-        done: [
-          {
-            id: 5,
-            title: 'Read Book',
-            description: 'Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.'
-          }
-        ]
+        todo: [],
+        doing: [],
+        done: []
       }
     },
     components: {
@@ -82,15 +46,27 @@
         for (let i = 0; i < items.length; i++) {
           if (items[i].id === taskId) {
             items.splice(i, 1)
+            this.saveToStorage()
             return true
           }
         }
         return false
       },
-      onMove ({relatedContext, draggedContext}) {
-        const relatedElement = relatedContext.element
-        const draggedElement = draggedContext.element
-        return (!relatedElement || !relatedElement.fixed) && !draggedElement.fixed
+      endMove (evt) {
+//        console.log(evt)
+//        console.log(evt.oldIndex)
+//        console.log(evt.newIndex)
+        this.saveToStorage()
+      },
+      loadFromStorage () {
+        this.todo = JSON.parse(localStorage.getItem('todo')) ? JSON.parse(localStorage.getItem('todo')) : []
+        this.doing = JSON.parse(localStorage.getItem('doing')) ? JSON.parse(localStorage.getItem('doing')) : []
+        this.done = JSON.parse(localStorage.getItem('done')) ? JSON.parse(localStorage.getItem('done')) : []
+      },
+      saveToStorage () {
+        localStorage.setItem('todo', JSON.stringify(this.todo))
+        localStorage.setItem('doing', JSON.stringify(this.doing))
+        localStorage.setItem('done', JSON.stringify(this.done))
       }
     },
     computed: {
@@ -101,8 +77,10 @@
       }
     },
     created () {
+      this.loadFromStorage()
       eventBus.$on('createTask', (task) => {
-        this.doing.unshift(task)
+        this.todo.unshift(task)
+        this.saveToStorage()
       })
       eventBus.$on('deleteTask', (taskId) => {
         let isRemove = this.removeTask(this.todo, taskId)
@@ -123,5 +101,8 @@
   }
   h5 {
     text-align: center;
+  }
+  .sortable-chosen {
+    opacity: 0.5;
   }
 </style>
