@@ -25,18 +25,18 @@
 
 <script>
   import Task from './Task.vue'
-  import { eventBus } from '../main'
+//  import { eventBus } from '../main'
   import draggable from 'vuedraggable'
 
   export default {
     name: 'Home',
-    data () {
-      return {
-        todo: [],
-        doing: [],
-        done: []
-      }
-    },
+//    data () {
+//      return {
+//        todo: [],
+//        doing: [],
+//        done: []
+//      }
+//    },
     components: {
       appTask: Task,
       draggable: draggable
@@ -46,7 +46,7 @@
         for (let i = 0; i < items.length; i++) {
           if (items[i].id === taskId) {
             items.splice(i, 1)
-            this.saveToStorage()
+//            this.saveToStorage()
             return true
           }
         }
@@ -56,17 +56,7 @@
 //        console.log(evt)
 //        console.log(evt.oldIndex)
 //        console.log(evt.newIndex)
-        this.saveToStorage()
-      },
-      loadFromStorage () {
-        this.todo = JSON.parse(localStorage.getItem('todo')) ? JSON.parse(localStorage.getItem('todo')) : []
-        this.doing = JSON.parse(localStorage.getItem('doing')) ? JSON.parse(localStorage.getItem('doing')) : []
-        this.done = JSON.parse(localStorage.getItem('done')) ? JSON.parse(localStorage.getItem('done')) : []
-      },
-      saveToStorage () {
-        localStorage.setItem('todo', JSON.stringify(this.todo))
-        localStorage.setItem('doing', JSON.stringify(this.doing))
-        localStorage.setItem('done', JSON.stringify(this.done))
+//        this.saveToStorage()
       }
     },
     computed: {
@@ -74,23 +64,32 @@
         return {
           group: 'tasks'
         }
+      },
+      todo () {
+        return this.$store.getters.todo
+      },
+      doing () {
+        return this.$store.getters.doing
+      },
+      done () {
+        return this.$store.getters.done
       }
     },
     created () {
-      this.loadFromStorage()
-      eventBus.$on('createTask', (task) => {
-        this.todo.unshift(task)
-        this.saveToStorage()
-      })
-      eventBus.$on('deleteTask', (taskId) => {
-        let isRemove = this.removeTask(this.todo, taskId)
-        if (!isRemove) {
-          isRemove = this.removeTask(this.doing, taskId)
-          if (!isRemove) {
-            this.removeTask(this.done, taskId)
-          }
-        }
-      })
+      this.$store.dispatch('loadFromStorage')
+//      eventBus.$on('createTask', (task) => {
+//        this.todo.unshift(task)
+//        this.saveToStorage()
+//      })
+//      eventBus.$on('deleteTask', (taskId) => {
+//        let isRemove = this.removeTask(this.todo, taskId)
+//        if (!isRemove) {
+//          isRemove = this.removeTask(this.doing, taskId)
+//          if (!isRemove) {
+//            this.removeTask(this.done, taskId)
+//          }
+//        }
+//      })
     }
   }
 </script>
