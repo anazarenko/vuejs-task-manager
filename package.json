@@ -11,10 +11,12 @@
     "lint": "eslint --ext .js,.vue src"
   },
   "dependencies": {
+    "axios": "^0.16.1",
     "vee-validate": "^2.0.0-rc.3",
     "vue": "^2.2.6",
     "vue-router": "^2.3.1",
-    "vuedraggable": "^2.11.0"
+    "vuedraggable": "^2.11.0",
+    "vuejs-datepicker": "^0.7.12"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.2",

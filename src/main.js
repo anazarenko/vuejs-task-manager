@@ -4,9 +4,11 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import VeeValidate from 'vee-validate'
+import VueResource from 'vue-resource'
 
 Vue.config.productionTip = false
 Vue.use(VeeValidate)
+Vue.use(VueResource)
 
 export const eventBus = new Vue({
   methods: {
