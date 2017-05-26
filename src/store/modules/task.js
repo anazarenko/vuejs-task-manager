@@ -200,17 +200,12 @@ const actions = {
 }
 
 const getters = {
-  // stockPortfolio (state, getters) {
-  //   return state.stocks.map(stock => {
-  //     const record = getters.stocks.find(element => element.id === stock.id)
-  //     return {
-  //       id: stock.id,
-  //       quantity: stock.quantity,
-  //       name: record.name,
-  //       price: record.price
-  //     }
-  //   })
-  // },
+  getTaskById: (state, getters) => (id) => {
+    let arr = state.todo.concat(state.doing).concat(state.done)
+    return arr.find((task) => {
+      return parseInt(task.id) === parseInt(id)
+    })
+  },
   todo (state) {
     return state.todo
   },
