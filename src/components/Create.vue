@@ -22,7 +22,6 @@
               </div>
               <div class="input-field col s12">
                 <datepicker v-model="selectedDate" name="date" :input-class="dateValidation" :disabled="dateConstraints.disabled" data-vv-delay="500" v-validate="'required'"></datepicker>
-                <!--<input id="date" name="date" type="date" data-vv-delay="500" v-validate="'required'" :class="dateValidation" v-model="task.date">-->
                 <span v-show="errors.has('date')" class="help is-danger">{{ errors.first('date') }}</span>
               </div>
               <div class="input-field col s12">
@@ -47,7 +46,6 @@
 </template>
 
 <script>
-  import { eventBus } from '../main'
   import Datepicker from 'vuejs-datepicker'
   import axios from 'axios'
   import vSelect from 'vue-select'
@@ -111,7 +109,7 @@
           .then(response => {
             let data = response.data.list.pop()
             this.task.weather = data.weather[0]
-            eventBus.createTask(this.task)
+            this.$store.dispatch('createTask', this.task)
             this.navigateToHome()
           })
           .catch(e => {

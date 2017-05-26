@@ -18,8 +18,6 @@
 </template>
 
 <script>
-//  import { eventBus } from '../main'
-
   export default {
     name: 'Task',
     props: ['task'],
@@ -37,7 +35,6 @@
     methods: {
       deleteTask () {
         this.$store.dispatch('removeTask', this.task.id)
-//        eventBus.$emit('deleteTask', this.task.id)
       }
     }
   }

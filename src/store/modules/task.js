@@ -137,9 +137,6 @@ const mutations = {
   'REMOVE_TASK' (state, taskId) {
     let isRemoved = false
     for (let i = 0; i < state.todo.length; i++) {
-      console.log(taskId)
-      console.log(state.todo[i].id)
-      console.log('----')
       if (state.todo[i].id === taskId) {
         state.todo.splice(i, 1)
         isRemoved = true
@@ -178,6 +175,9 @@ const mutations = {
         state.done = payload.list
         break
     }
+  },
+  'CREATE_TASK' (state, task) {
+    state.todo.unshift(task)
   }
 }
 
@@ -193,6 +193,9 @@ const actions = {
   },
   updateList ({commit}, payload) {
     commit('UPDATE_LIST', payload)
+  },
+  createTask ({commit}, task) {
+    commit('CREATE_TASK', task)
   }
 }
 
