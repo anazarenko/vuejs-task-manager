@@ -1,138 +1,19 @@
 const state = {
-  todo: [
-    {
-      id: 1,
-      title: 'Read Books',
-      description: 'fd kjdfb ksfh fkjbds fkjdvb',
-      city: 'Kiev',
-      date: '20.06.2016',
-      weather: {
-        icon: '02d',
-        main: 'Rain',
-        description: 'small rain'
-      }
-    },
-    {
-      id: 12,
-      title: 'Eat Cookie',
-      description: 'fd kjdfb ksfh fkjbds fkjdvb',
-      city: 'Lviv',
-      date: '04.06.2016',
-      weather: {
-        icon: '01d',
-        main: 'Sun',
-        description: 'small rain'
-      }
-    }
-  ],
-  doing: [
-    {
-      id: 9,
-      title: 'Watch Movie',
-      description: 'fd kjdfb ksfh fkjbds fkjdvb',
-      city: 'Odessa',
-      date: '29.05.2016',
-      weather: {
-        icon: '01d',
-        main: 'Sun',
-        description: 'small rain'
-      }
-    }
-  ],
+  todo: [],
+  doing: [],
   done: []
 }
 
 const mutations = {
-  // 'BUY_STOCK'(state, {stockId, quantity, stockPrice}) {
-  //   const record = state.stocks.find(element => element.id === stockId);
-  //   if (record) {
-  //     record.quantity += quantity;
-  //   } else {
-  //     state.stocks.push({
-  //       id: stockId,
-  //       quantity: quantity
-  //     });
-  //   }
-  //   state.funds -= stockPrice * quantity;
-  // },
-  // 'SELL_STOCK'(state, {stockId, quantity, stockPrice}) {
-  //   const record = state.stocks.find(element => element.id === stockId);
-  //   if (record.quantity > quantity) {
-  //     record.quantity -= quantity;
-  //   } else {
-  //     state.stocks.splice(state.stocks.indexOf(record), 1);
-  //   }
-  //   state.funds += stockPrice * quantity;
-  // },
-  // 'SET_PORTFOLIO' (state, portfolio) {
-  //   state.funds = portfolio.funds;
-  //   state.stocks = portfolio.stockPortfolio ? portfolio.stockPortfolio : [];
-  // }
   'LOAD_FROM_STORAGE' (state) {
-    // state.todo = JSON.parse(localStorage.getItem('todo')) ? JSON.parse(localStorage.getItem('todo')) : []
-    // state.doing = JSON.parse(localStorage.getItem('doing')) ? JSON.parse(localStorage.getItem('doing')) : []
-    // state.done = JSON.parse(localStorage.getItem('done')) ? JSON.parse(localStorage.getItem('done')) : []
-    state.todo = [
-      {
-        id: 1,
-        title: 'Read Books',
-        description: 'fd kjdfb ksfh fkjbds fkjdvb',
-        city: 'Kiev',
-        date: '20/06/2017',
-        created: '12213',
-        weather: {
-          icon: '02d',
-          main: 'Rain',
-          description: 'small rain'
-        }
-      },
-      {
-        id: 12,
-        title: 'Eat Cookie',
-        description: 'fd kjdfb ksfh fkjbds fkjdvb',
-        city: 'Lviv',
-        date: '04/06/2017',
-        created: 'kjlkj',
-        weather: {
-          icon: '01d',
-          main: 'Sun',
-          description: 'small rain'
-        }
-      },
-      {
-        id: 150,
-        title: 'Make Video',
-        description: 'fd kjdfb ksfh fkjbds fkjdvb',
-        city: 'Lviv',
-        date: '04/06/2017',
-        created: 'jkjklh',
-        weather: {
-          icon: '01d',
-          main: 'Sun',
-          description: 'small rain'
-        }
-      }
-    ]
-    state.doing = [
-      {
-        id: 9,
-        title: 'Watch Movie',
-        description: 'fd kjdfb ksfh fkjbds fkjdvb',
-        city: 'Odessa',
-        date: '29/05/2017',
-        weather: {
-          icon: '01d',
-          main: 'Sun',
-          description: 'small rain'
-        }
-      }
-    ]
-    state.done = []
+    state.todo = JSON.parse(localStorage.getItem('todo')) ? JSON.parse(localStorage.getItem('todo')) : []
+    state.doing = JSON.parse(localStorage.getItem('doing')) ? JSON.parse(localStorage.getItem('doing')) : []
+    state.done = JSON.parse(localStorage.getItem('done')) ? JSON.parse(localStorage.getItem('done')) : []
   },
   'SAVE_TO_STORAGE' (state) {
-    // localStorage.setItem('todo', JSON.stringify(state.todo))
-    // localStorage.setItem('doing', JSON.stringify(state.doing))
-    // localStorage.setItem('done', JSON.stringify(state.done))
+    localStorage.setItem('todo', JSON.stringify(state.todo))
+    localStorage.setItem('doing', JSON.stringify(state.doing))
+    localStorage.setItem('done', JSON.stringify(state.done))
   },
   'REMOVE_TASK' (state, taskId) {
     let isRemoved = false
@@ -142,9 +23,7 @@ const mutations = {
         isRemoved = true
       }
     }
-    if (isRemoved) {
-      // this.saveToStorage()
-    } else {
+    if (!isRemoved) {
       for (let i = 0; i < state.doing.length; i++) {
         if (state.doing[i].id === taskId) {
           state.doing.splice(i, 1)
@@ -152,9 +31,7 @@ const mutations = {
         }
       }
     }
-    if (isRemoved) {
-      // this.saveToStorage()
-    } else {
+    if (!isRemoved) {
       for (let i = 0; i < state.done.length; i++) {
         if (state.done[i].id === taskId) {
           state.done.splice(i, 1)
@@ -178,6 +55,11 @@ const mutations = {
   },
   'CREATE_TASK' (state, task) {
     state.todo.unshift(task)
+  },
+  'UPDATE_TASK' (state, {reactiveTask, changedTask}) {
+    for (let k in changedTask) {
+      reactiveTask[k] = changedTask[k]
+    }
   }
 }
 
@@ -190,12 +72,19 @@ const actions = {
   },
   removeTask ({commit}, taskId) {
     commit('REMOVE_TASK', taskId)
+    commit('SAVE_TO_STORAGE')
   },
   updateList ({commit}, payload) {
     commit('UPDATE_LIST', payload)
+    commit('SAVE_TO_STORAGE')
   },
   createTask ({commit}, task) {
     commit('CREATE_TASK', task)
+    commit('SAVE_TO_STORAGE')
+  },
+  updateTask ({commit}, payload) {
+    commit('UPDATE_TASK', payload)
+    commit('SAVE_TO_STORAGE')
   }
 }
 
@@ -203,7 +92,7 @@ const getters = {
   getTaskById: (state, getters) => (id) => {
     let arr = state.todo.concat(state.doing).concat(state.done)
     return arr.find((task) => {
-      return parseInt(task.id) === parseInt(id)
+      return task.id === id
     })
   },
   todo (state) {

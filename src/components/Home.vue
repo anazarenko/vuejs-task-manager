@@ -3,19 +3,19 @@
     <div class="row tasks">
       <div class="col s4">
         <h5>TODO</h5>
-        <draggable class="task-list todo" element="div" v-model="todo" @end="endMove" :options="dragOptions">
+        <draggable class="task-list todo" element="div" v-model="todo" :options="dragOptions">
           <app-task v-for="task in todo" :task="task" :key="task.id"></app-task>
         </draggable>
       </div>
       <div class="col s4">
         <h5>DOING</h5>
-        <draggable class="task-list doing" element="div" v-model="doing" @end="endMove" :options="dragOptions">
+        <draggable class="task-list doing" element="div" v-model="doing" :options="dragOptions">
           <app-task v-for="task in doing" :task="task" :key="task.id"></app-task>
         </draggable>
       </div>
       <div class="col s4">
         <h5>DONE</h5>
-        <draggable class="task-list done" element="div" v-model="done" @end="endMove" :options="dragOptions">
+        <draggable class="task-list done" element="div" v-model="done" :options="dragOptions">
           <app-task v-for="task in done" :task="task" :key="task.id"></app-task>
         </draggable>
       </div>
@@ -25,18 +25,10 @@
 
 <script>
   import Task from './Task.vue'
-//  import { eventBus } from '../main'
   import draggable from 'vuedraggable'
 
   export default {
     name: 'Home',
-//    data () {
-//      return {
-//        todo: [],
-//        doing: [],
-//        done: []
-//      }
-//    },
     components: {
       appTask: Task,
       draggable: draggable
@@ -46,22 +38,11 @@
         for (let i = 0; i < items.length; i++) {
           if (items[i].id === taskId) {
             items.splice(i, 1)
-//            this.saveToStorage()
+            this.$store.dispatch('saveToStorage')
             return true
           }
         }
         return false
-      },
-      endMove (evt) {
-//        let fromList = this.searchListName(evt.from.className)
-//        let toList = this.searchListName(evt.to.className)
-//        this.$store.dispatch('changeTaskPosition', {
-//          from: evt.oldIndex,
-//          to: evt.newIndex,
-//          fromList: fromList,
-//          toList: toList
-//        })
-//        this.saveToStorage()
       },
       searchListName (classString) {
         if (classString.search('todo') !== -1) {

@@ -105,7 +105,6 @@
         return Math.floor((Date.UTC(dt2.getFullYear(), dt2.getMonth(), dt2.getDate()) - Date.UTC(dt1.getFullYear(), dt1.getMonth(), dt1.getDate())) / (1000 * 60 * 60 * 24))
       },
       getWeather (cnt) {
-        this.navigateToHome()
         axios.get('http://api.openweathermap.org/data/2.5/forecast/daily', {
           params: {
             q: this.task.city,
@@ -116,9 +115,7 @@
           .then(response => {
             let data = response.data.list.pop()
             this.task.weather = data.weather[0]
-            for (let k in this.task) {
-              this.reactiveTask[k] = this.task[k]
-            }
+            this.$store.dispatch('updateTask', {reactiveTask: this.reactiveTask, changedTask: this.task})
             this.navigateToHome()
           })
           .catch(e => {

@@ -138,7 +138,7 @@
           })
       },
       changeCity (val) {
-        this.task.city = JSON.stringify(val)
+        this.task.city = JSON.stringify(val).replace('"', '').replace('"', '')
       },
       guid () {
         function s4 () {

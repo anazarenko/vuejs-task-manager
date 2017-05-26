@@ -26,6 +26,7 @@
     data () {
       return {
         task: null,
+        iconSrc: '',
         editLink: {
           name: 'taskEdit',
           params: {
