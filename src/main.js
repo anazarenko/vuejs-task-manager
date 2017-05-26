@@ -11,17 +11,6 @@ Vue.config.productionTip = false
 Vue.use(VeeValidate)
 Vue.use(VueResource)
 
-export const eventBus = new Vue({
-  methods: {
-    createTask (task) {
-      this.$emit('createTask', task)
-    },
-    deleteTask (taskId) {
-      this.$emit('deleteTask', taskId)
-    }
-  }
-})
-
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

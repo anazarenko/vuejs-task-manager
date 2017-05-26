@@ -108,19 +108,6 @@
     },
     created () {
       this.$store.dispatch('loadFromStorage')
-//      eventBus.$on('createTask', (task) => {
-//        this.todo.unshift(task)
-//        this.saveToStorage()
-//      })
-//      eventBus.$on('deleteTask', (taskId) => {
-//        let isRemove = this.removeTask(this.todo, taskId)
-//        if (!isRemove) {
-//          isRemove = this.removeTask(this.doing, taskId)
-//          if (!isRemove) {
-//            this.removeTask(this.done, taskId)
-//          }
-//        }
-//      })
     }
   }
 </script>

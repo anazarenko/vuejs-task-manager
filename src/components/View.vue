@@ -14,7 +14,7 @@
       </div>
       <div class="modal-footer">
         <a class="modal-action modal-close waves-effect waves-green btn-flat" @click="deleteTask">Delete</a>
-        <a class="modal-action modal-close waves-effect waves-green btn-flat">Edit</a>
+        <router-link class="modal-action modal-close waves-effect waves-green btn-flat" :to="editLink">Edit</router-link>
       </div>
     </div>
   </div>
@@ -25,7 +25,13 @@
     name: 'View',
     data () {
       return {
-        task: null
+        task: null,
+        editLink: {
+          name: 'taskEdit',
+          params: {
+            id: this.$route.params.id
+          }
+        }
       }
     },
     methods: {

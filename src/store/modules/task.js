@@ -78,7 +78,7 @@ const mutations = {
         title: 'Read Books',
         description: 'fd kjdfb ksfh fkjbds fkjdvb',
         city: 'Kiev',
-        date: '20.06.2016',
+        date: '20/06/2017',
         created: '12213',
         weather: {
           icon: '02d',
@@ -91,7 +91,7 @@ const mutations = {
         title: 'Eat Cookie',
         description: 'fd kjdfb ksfh fkjbds fkjdvb',
         city: 'Lviv',
-        date: '04.06.2016',
+        date: '04/06/2017',
         created: 'kjlkj',
         weather: {
           icon: '01d',
@@ -104,7 +104,7 @@ const mutations = {
         title: 'Make Video',
         description: 'fd kjdfb ksfh fkjbds fkjdvb',
         city: 'Lviv',
-        date: '04.06.2016',
+        date: '04/06/2017',
         created: 'jkjklh',
         weather: {
           icon: '01d',
@@ -119,7 +119,7 @@ const mutations = {
         title: 'Watch Movie',
         description: 'fd kjdfb ksfh fkjbds fkjdvb',
         city: 'Odessa',
-        date: '29.05.2016',
+        date: '29/05/2017',
         weather: {
           icon: '01d',
           main: 'Sun',

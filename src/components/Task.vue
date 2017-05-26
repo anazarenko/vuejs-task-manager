@@ -9,7 +9,7 @@
         </div>
         <div class="card-action">
           <router-link :to="viewLink">View</router-link>
-          <a>Edit</a>
+          <router-link :to="editLink">Edit</router-link>
           <a @click="deleteTask">Delete</a>
         </div>
       </div>
@@ -23,13 +23,23 @@
     props: ['task'],
     data () {
       return {
-        iconSrc: `http://openweathermap.org/img/w/${this.task.weather.icon}.png`,
         viewLink: {
           name: 'taskView',
           params: {
             id: this.task.id
           }
+        },
+        editLink: {
+          name: 'taskEdit',
+          params: {
+            id: this.task.id
+          }
         }
+      }
+    },
+    computed: {
+      iconSrc () {
+        return `http://openweathermap.org/img/w/${this.task.weather.icon}.png`
       }
     },
     methods: {
